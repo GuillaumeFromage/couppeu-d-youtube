@@ -59,8 +59,6 @@ def main():
 
   # A user-agent is required with Discogs API requests. Be sure to make your user-agent
   # unique, or you may get a bad response.
-  user_agent = 'discogs_api_example/1.0'
+  user_agent = 'logiciel-de-marde/66.6'
 
 main()
-
-
