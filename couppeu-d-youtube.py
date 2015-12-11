@@ -2,7 +2,7 @@
 
 #
 # Try to fetch an album info from a youtube file, and then
-# cut it up in mp3s
+# cut it up in mp3s using discogs api
 
 # semi standard debian stuff (I guess)
 import json
