@@ -25,7 +25,7 @@ def usage():
 
 def main():
   try:
-    opts, args = getopt.getopt(sys.argv[1:], "", ["url=", "artist=", "album="])
+    opts, args = getopt.getopt(sys.argv[1:], "", ["url=", "release="])
   except getopt.GetoptError as err:
     # print help information and exit:
     print str(err) # will print something like "option -a not recognized"
@@ -40,12 +40,10 @@ def main():
   url = ''
   while opts: 
     opt = opts.pop()
-    if opt[0] == '--artist':
-      artist = opt[1]
-    if opt[0] == '--album':
-      album = opt[1]
     if opt[0] == '--url':
       url = opt[1]
+    if opt[0] == '--release':
+      release = opt[1]
 
   if url == '': 
     usage() 
@@ -145,24 +143,25 @@ def main():
   # With an active auth token, we're able to reuse the client object and request 
   # additional discogs authenticated endpoints, such as database search.
   print(infos["fulltitle"])
-  resp, content = client.request('https://api.discogs.com/database/search?release_title=' + album + "&artist=" + artist + "&type=releases",
+  resp, content = client.request('https://api.discogs.com/releases/' + release,
         headers={'User-Agent': user_agent})
 
   if resp['status'] != '200':
     sys.exit('Invalid API response {0}.'.format(resp['status']))
 
-  releases = json.loads(content)
-  for release in releases['results']:
-    print '\n\t== discogs-id {id} =='.format(id=release['id'])
-    print u'\tTitle\t: {title}'.format(title=release.get('title', 'Unknown'))
-    print u'\tYear\t: {year}'.format(year=release.get('year', 'Unknown'))
-    print u'\tLabels\t: {label}'.format(label=', '.join(release.get('label',
-                 ['Unknown'])))
-    print u'\tCat No\t: {catno}'.format(catno=release.get('catno', 'Unknown'))
-    print u'\tFormats\t: {fmt}'.format(fmt=', '.join(release.get('format',
-                 ['Unknown']))) 
 
-  
+  releases = json.loads(content)
+  print(pprint.pformat(releases))
+  #for release in releases['results']:
+  #  print '\n\t== discogs-id {id} =='.format(id=release['id'])
+  #  print u'\tTitle\t: {title}'.format(title=release.get('title', 'Unknown'))
+  #  print u'\tYear\t: {year}'.format(year=release.get('year', 'Unknown'))
+  #  print u'\tLabels\t: {label}'.format(label=', '.join(release.get('label',
+  #               ['Unknown'])))
+  #  print u'\tCat No\t: {catno}'.format(catno=release.get('catno', 'Unknown'))
+  #  print u'\tFormats\t: {fmt}'.format(fmt=', '.join(release.get('format',
+  #               ['Unknown']))) 
+
     
     # https://www.youtube.com/watch?v=CrRFSuuvkmc
 
