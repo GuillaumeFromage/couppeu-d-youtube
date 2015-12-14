@@ -165,4 +165,10 @@ def main():
     
     # https://www.youtube.com/watch?v=CrRFSuuvkmc
 
+  # from sox documentation:
+
+  # This is an example of splitting the first 60 seconds of an input file into two 30 second files and ignoring the rest.
+  # sox song.wav ringtone%1n.wav trim 0 30 : newfile : trim 0 30
+
+
 main()
